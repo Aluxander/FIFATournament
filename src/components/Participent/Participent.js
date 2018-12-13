@@ -5,10 +5,16 @@ class Participent extends Component {
     const { participent } = this.props;
     return (
       <div className="participent">
-        <div className="participent__image">
-          <img src={participent.img} />
+        <div className="participent__image-name">
+          <div className="participent__image">
+            <img src={participent.img} />
+          </div>
+          <div className="participent__name">{participent.name}</div>
         </div>
-        <div className="participent__name">{participent.name}</div>
+        <i
+          onClick={() => this.props.onDeleteParticipent(participent.name)}
+          className="fa fa-remove remove"
+        />
       </div>
     );
   }

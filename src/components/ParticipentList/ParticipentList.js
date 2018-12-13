@@ -12,7 +12,6 @@ class ParticipentList extends Component {
   };
 
   handleInputKeyDown = ({ keyCode, target }) => {
-    console.log(target);
     if (keyCode !== 13 || target.value === null) return null;
     this.addParticipent(this.state.inputName);
   };
@@ -28,7 +27,7 @@ class ParticipentList extends Component {
 
     return (
       <div className="participent-list">
-        <h3>Add participents</h3>
+        <h3>Participents</h3>
         <div className="participent-list__add">
           <input
             type="name"
@@ -41,14 +40,18 @@ class ParticipentList extends Component {
           />
           <button
             onClick={() => this.addParticipent(this.state.inputName)}
-            class="btn btn-primary"
+            className="btn btn-primary"
           >
             Add
           </button>
         </div>
         <div className="participent-list__listing">
           {participents.map(participent => (
-            <Participent key={participent.name} participent={participent} />
+            <Participent
+              key={participent.name}
+              participent={participent}
+              onDeleteParticipent={this.props.onDeleteParticipent}
+            />
           ))}
         </div>
       </div>

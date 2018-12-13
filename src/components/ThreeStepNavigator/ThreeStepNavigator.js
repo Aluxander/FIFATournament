@@ -25,7 +25,7 @@ class ThreeStepNavigator extends Component {
             onClick={() => this.props.onStep(3)}
             className={step === 3 ? "is-active" : ""}
           >
-            Step 3
+            Summary
           </li>
         </ul>
       </div>

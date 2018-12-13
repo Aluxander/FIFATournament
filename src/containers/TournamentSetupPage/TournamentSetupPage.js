@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ParticipentList from "../../components/ParticipentList/ParticipentList";
 import TeamQuantity from "../../components/TeamQuantity/TeamQuantity";
 import ThreeStepNavigator from "../../components/ThreeStepNavigator/ThreeStepNavigator";
 import TorunamentSetupStepTwo from "../../components/TournamentSetupStepTwo/TournamentSetupStepTwo";
@@ -9,9 +8,15 @@ class TorunamentSetupPage extends Component {
   state = {
     participents: [],
     teams: [],
+    generatedTeams: [],
     oneOnOne: false,
     twoOntwo: false,
     step: 1
+  };
+
+  handleRandomTeams = generatedTeams => {
+    console.log(generatedTeams);
+    this.setState({ generatedTeams: generatedTeams });
   };
 
   handleStep = step => {
@@ -67,6 +72,18 @@ class TorunamentSetupPage extends Component {
     });
   };
 
+  handleDeleteParticipent = participent => {
+    const participents = this.state.participents.filter(
+      p => p.name !== participent
+    );
+    this.setState({ participents: participents });
+  };
+
+  handleDeleteTeam = team => {
+    const teams = this.state.teams.filter(t => t.name !== team);
+    this.setState({ teams: teams });
+  };
+
   render() {
     return (
       <div className="tournament-setup-page">
@@ -82,9 +99,12 @@ class TorunamentSetupPage extends Component {
                 return (
                   <TorunamentSetupStepTwo
                     onAddParticipent={this.handleAddParticipent}
+                    onDeleteParticipent={this.handleDeleteParticipent}
                     participents={this.state.participents}
                     onAddTeam={this.handleAddTeam}
+                    onDeleteTeam={this.handleDeleteTeam}
                     teams={this.state.teams}
+                    onRandomTeams={this.handleRandomTeams}
                   />
                 );
               default:

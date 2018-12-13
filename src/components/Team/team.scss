@@ -1,11 +1,18 @@
 .team {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: ghostwhite;
   border: 1px solid lightgray;
   padding: 5px;
   width: 300px;
   margin-bottom: 5px;
+
+  &__image-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 
   &__image {
     img {
@@ -18,5 +25,13 @@
     font-weight: bold;
     font-size: 15px;
     margin-left: 15px;
+  }
+
+  .remove {
+    padding: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

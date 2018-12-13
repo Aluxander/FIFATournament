@@ -12,13 +12,11 @@ class TeamsList extends Component {
   };
 
   handleInputKeyDown = ({ keyCode, target }) => {
-    console.log(target);
     if (keyCode !== 13 || target.value === null) return null;
     this.addTeam(this.state.inputTeam);
   };
 
   addTeam = inputTeam => {
-    console.log(inputTeam);
     if (inputTeam === "") return null;
     this.props.onAddTeam(inputTeam);
     this.setState({ inputTeam: "" });
@@ -29,7 +27,7 @@ class TeamsList extends Component {
 
     return (
       <div className="teams-list">
-        <h3>Add teams</h3>
+        <h3>Teams</h3>
         <div className="teams-list__add">
           <input
             type="team"
@@ -42,14 +40,18 @@ class TeamsList extends Component {
           />
           <button
             onClick={() => this.addTeam(this.state.inputTeam)}
-            class="btn btn-primary"
+            className="btn btn-primary"
           >
             Add
           </button>
         </div>
         <div className="teams-list__listing">
           {teams.map(team => (
-            <Team key={team} team={team} />
+            <Team
+              key={team.name}
+              team={team}
+              onDeleteTeam={this.props.onDeleteTeam}
+            />
           ))}
         </div>
       </div>

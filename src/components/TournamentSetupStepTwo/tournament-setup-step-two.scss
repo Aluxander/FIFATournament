@@ -1,4 +1,8 @@
 .tournament-setup-step-two {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  .tournament-list-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+  }
 }
