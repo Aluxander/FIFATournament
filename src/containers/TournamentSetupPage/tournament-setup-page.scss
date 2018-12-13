@@ -1,0 +1,9 @@
+.tournament-setup-page {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  &__steps {
+    margin-top: 20px;
+  }
+}

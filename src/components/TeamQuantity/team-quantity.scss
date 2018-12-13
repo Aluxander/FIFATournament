@@ -1,0 +1,38 @@
+.team-quantity {
+  &__cards {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    &__card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 125px;
+      width: 25%;
+      margin: 0 20px 0 20px;
+      text-align: center;
+      background-color: ghostwhite;
+      border: 1px solid lightgray;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      .two-controllers {
+        display: flex;
+        flex-direction: column;
+      }
+
+      i {
+        font-size: 60px;
+      }
+
+      span {
+        font-size: 22px;
+        font-weight: bold;
+        padding: 25px;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.participent-list {
+  &__add {
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  .btn {
+    margin-left: 10px;
+    background-color: tomato;
+    border-color: tomato;
+  }
+  input {
+    width: 300px;
+  }
+}
