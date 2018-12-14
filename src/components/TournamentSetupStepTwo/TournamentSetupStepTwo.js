@@ -3,24 +3,45 @@ import ParticipentList from "../ParticipentList/ParticipentList";
 import TeamsList from "../TeamsList/TeamsList";
 import "./tournament-setup-step-two.scss";
 const shuffle = require("shuffle-array");
+
 class TournamentSetupStepTwo extends Component {
   randomizeTeams = () => {
-    let participents = this.props.participents;
-    let teams = this.props.teams;
-    let shuffledParticipents = shuffle(participents);
-    let shuffledTeams = shuffle(teams);
-    let generatedTeams = [];
+    const shuffledParticipents = shuffle([...this.props.participents]);
+    const shuffledTeams = shuffle([...this.props.teams]);
+    const generatedTeams = this.randomTwoVsTwo(
+      shuffledParticipents,
+      shuffledTeams
+    );
 
-    for (var i = 0; i < participents.length; i++) {
+    this.props.onRandomTeams(generatedTeams);
+  };
+  randomOneVsOne = (participents, teams) => {
+    let generatedTeams = [];
+    for (let i = 0; i < participents.length; i++) {
       generatedTeams = [
         ...generatedTeams,
         {
-          participents: [shuffledParticipents[i].name],
-          team: shuffledTeams[i].name
+          participents: [participents[i].name],
+          team: teams[i].name
         }
       ];
     }
-    this.props.onRandomTeams(generatedTeams);
+    return generatedTeams;
+  };
+  randomTwoVsTwo = (participents, teams) => {
+    let generatedTeams = [];
+    let teamIndex = 0;
+    for (let i = 0; i < participents.length; i = i + 2) {
+      generatedTeams = [
+        ...generatedTeams,
+        {
+          participents: [participents[i].name, participents[i + 1].name],
+          team: teams[teamIndex].name
+        }
+      ];
+      teamIndex++;
+    }
+    return generatedTeams;
   };
   render() {
     return (
