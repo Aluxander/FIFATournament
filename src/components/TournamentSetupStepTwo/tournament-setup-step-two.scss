@@ -5,4 +5,23 @@
     display: flex;
     justify-content: space-evenly;
   }
+
+  &__btn {
+    width: 300px;
+    margin-top: 30px;
+    align-self: center;
+
+    .btn {
+      width: 100%;
+    }
+    .show {
+      display: block;
+    }
+    .hide {
+      display: none;
+    }
+    .error {
+      margin-top: 10px;
+    }
+  }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Participent from "../Participent/Participent";
-import "./participent-list.scss";
+import Participant from "../Participant/Participant";
+import "./participant-list.scss";
 
-class ParticipentList extends Component {
+class ParticipantList extends Component {
   state = {
     inputName: ""
   };
@@ -13,44 +13,44 @@ class ParticipentList extends Component {
 
   handleInputKeyDown = ({ keyCode, target }) => {
     if (keyCode !== 13 || target.value === null) return null;
-    this.addParticipent(this.state.inputName);
+    this.addParticipant(this.state.inputName);
   };
 
-  addParticipent = inputName => {
+  addParticipant = inputName => {
     if (inputName === "") return null;
-    this.props.onAddParticipent(inputName);
+    this.props.onAddParticipant(inputName);
     this.setState({ inputName: "" });
   };
 
   render() {
-    const { participents } = this.props;
+    const { participants } = this.props;
 
     return (
-      <div className="participent-list">
-        <h3>Participents</h3>
-        <div className="participent-list__add">
+      <div className="participant-list">
+        <h3>Participants</h3>
+        <div className="participant-list__add">
           <input
             type="name"
             className="form-control"
-            id="participent-name"
+            id="participant-name"
             value={this.state.inputName}
             placeholder="Name"
             onChange={this.handleInputName}
             onKeyDown={this.handleInputKeyDown}
           />
           <button
-            onClick={() => this.addParticipent(this.state.inputName)}
+            onClick={() => this.addParticipant(this.state.inputName)}
             className="btn btn-primary"
           >
             Add
           </button>
         </div>
-        <div className="participent-list__listing">
-          {participents.map(participent => (
-            <Participent
-              key={participent.name}
-              participent={participent}
-              onDeleteParticipent={this.props.onDeleteParticipent}
+        <div className="participant-list__listing">
+          {participants.map(participant => (
+            <Participant
+              key={participant.name}
+              participant={participant}
+              onDeleteParticipant={this.props.onDeleteParticipant}
             />
           ))}
         </div>
@@ -59,4 +59,4 @@ class ParticipentList extends Component {
   }
 }
 
-export default ParticipentList;
+export default ParticipantList;

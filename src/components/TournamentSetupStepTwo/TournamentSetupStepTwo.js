@@ -1,41 +1,60 @@
 import React, { Component } from "react";
-import ParticipentList from "../ParticipentList/ParticipentList";
+import ParticipantList from "../ParticipantList/ParticipantList";
 import TeamsList from "../TeamsList/TeamsList";
 import "./tournament-setup-step-two.scss";
 const shuffle = require("shuffle-array");
 
 class TournamentSetupStepTwo extends Component {
-  randomizeTeams = () => {
-    const shuffledParticipents = shuffle([...this.props.participents]);
-    const shuffledTeams = shuffle([...this.props.teams]);
-    const generatedTeams = this.randomTwoVsTwo(
-      shuffledParticipents,
-      shuffledTeams
-    );
-
-    this.props.onRandomTeams(generatedTeams);
+  state = {
+    errorClass: "hide",
+    errorMessage: ""
   };
-  randomOneVsOne = (participents, teams) => {
+
+  randomizeTeams = () => {
+    const shuffledParticipants = shuffle([...this.props.participants]);
+    const shuffledTeams = shuffle([...this.props.teams]);
     let generatedTeams = [];
-    for (let i = 0; i < participents.length; i++) {
+    if (this.props.oneVsOne) {
+      if (this.isCorrectOneVsOne())
+        generatedTeams = this.randomOneVsOne(
+          shuffledParticipants,
+          shuffledTeams
+        );
+    }
+    if (this.props.twoVsTwo) {
+      if (this.isCorrectTwoVsTwo())
+        generatedTeams = this.randomOneVsOne(
+          shuffledParticipants,
+          shuffledTeams
+        );
+    }
+    if (generatedTeams.length > 0) {
+      this.props.onRandomTeams(generatedTeams);
+    }
+  };
+
+  randomOneVsOne = (participants, teams) => {
+    let generatedTeams = [];
+    for (let i = 0; i < participants.length; i++) {
       generatedTeams = [
         ...generatedTeams,
         {
-          participents: [participents[i].name],
+          participants: [participants[i].name],
           team: teams[i].name
         }
       ];
     }
     return generatedTeams;
   };
-  randomTwoVsTwo = (participents, teams) => {
+
+  randomTwoVsTwo = (participants, teams) => {
     let generatedTeams = [];
     let teamIndex = 0;
-    for (let i = 0; i < participents.length; i = i + 2) {
+    for (let i = 0; i < participants.length; i = i + 2) {
       generatedTeams = [
         ...generatedTeams,
         {
-          participents: [participents[i].name, participents[i + 1].name],
+          participants: [participants[i].name, participants[i + 1].name],
           team: teams[teamIndex].name
         }
       ];
@@ -43,14 +62,53 @@ class TournamentSetupStepTwo extends Component {
     }
     return generatedTeams;
   };
+
+  isCorrectOneVsOne = () => {
+    if (
+      this.props.participants.length === this.props.teams.length &&
+      this.props.teams.length > 2 &&
+      this.props.participants.length > 2
+    ) {
+      this.setState({
+        errorClass: "hide"
+      });
+      return true;
+    }
+    this.setState({
+      errorClass: "show",
+      errorMessage:
+        "For 1v1, there should be as many participants as there are teams. With a minimum of three teams!"
+    });
+    return false;
+  };
+
+  isCorrectTwoVsTwo = () => {
+    if (
+      this.props.participants.length / 2 === this.props.teams.length &&
+      this.props.teams.length > 2 &&
+      this.props.participants.length > 2
+    ) {
+      this.setState({
+        errorClass: "hide"
+      });
+      return true;
+    }
+    this.setState({
+      errorClass: "show",
+      errorMessage:
+        "For 2v2, there should be twice as many participants as thera are teams. With a minimum of three teams!"
+    });
+    return false;
+  };
+
   render() {
     return (
       <div className="tournament-setup-step-two">
         <div className="tournament-list-wrapper">
-          <ParticipentList
-            onAddParticipent={this.props.onAddParticipent}
-            onDeleteParticipent={this.props.onDeleteParticipent}
-            participents={this.props.participents}
+          <ParticipantList
+            onAddParticipant={this.props.onAddParticipant}
+            onDeleteParticipant={this.props.onDeleteParticipant}
+            participants={this.props.participants}
           />
           <TeamsList
             onAddTeam={this.props.onAddTeam}
@@ -58,9 +116,14 @@ class TournamentSetupStepTwo extends Component {
             teams={this.props.teams}
           />
         </div>
-        <button onClick={this.randomizeTeams} className="btn btn-primary">
-          Generate teams
-        </button>
+        <div className="tournament-setup-step-two__btn">
+          <button onClick={this.randomizeTeams} className="btn btn-primary">
+            Generate teams
+          </button>
+          <span className={this.state.errorClass + " error"}>
+            {this.state.errorMessage}
+          </span>
+        </div>
       </div>
     );
   }

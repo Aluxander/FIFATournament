@@ -6,11 +6,11 @@ import "./tournament-setup-page.scss";
 
 class TorunamentSetupPage extends Component {
   state = {
-    participents: [],
+    participants: [],
     teams: [],
     generatedTeams: [],
-    oneOnOne: false,
-    twoOntwo: false,
+    oneVsOne: false,
+    twoVsTwo: false,
     step: 1
   };
 
@@ -46,22 +46,22 @@ class TorunamentSetupPage extends Component {
   handleTeamQuantity = option => {
     if (option === 1) {
       this.setState({
-        oneOnOne: true,
+        oneVsOne: true,
         step: 2
       });
     } else if (option === 2) {
       this.setState({
-        twoOntwo: true,
+        twoVsTwo: true,
         step: 2
       });
     }
   };
 
-  handleAddParticipent = participent => {
+  handleAddParticipant = participant => {
     this.setState({
-      participents: [
-        ...this.state.participents,
-        { name: participent, img: "images/player.png" }
+      participants: [
+        ...this.state.participants,
+        { name: participant, img: "images/player.png" }
       ]
     });
   };
@@ -72,11 +72,11 @@ class TorunamentSetupPage extends Component {
     });
   };
 
-  handleDeleteParticipent = participent => {
-    const participents = this.state.participents.filter(
-      p => p.name !== participent
+  handleDeleteParticipant = participant => {
+    const participants = this.state.participants.filter(
+      p => p.name !== participant
     );
-    this.setState({ participents: participents });
+    this.setState({ participants: participants });
   };
 
   handleDeleteTeam = team => {
@@ -98,13 +98,15 @@ class TorunamentSetupPage extends Component {
               case 2:
                 return (
                   <TorunamentSetupStepTwo
-                    onAddParticipent={this.handleAddParticipent}
-                    onDeleteParticipent={this.handleDeleteParticipent}
-                    participents={this.state.participents}
+                    onAddParticipant={this.handleAddParticipant}
+                    onDeleteParticipant={this.handleDeleteParticipant}
+                    participants={this.state.participants}
                     onAddTeam={this.handleAddTeam}
                     onDeleteTeam={this.handleDeleteTeam}
                     teams={this.state.teams}
                     onRandomTeams={this.handleRandomTeams}
+                    oneVsOne={this.state.oneVsOne}
+                    twoVsTwo={this.state.twoVsTwo}
                   />
                 );
               default:
