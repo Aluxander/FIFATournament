@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./team-quantity.scss";
+import "./tournament-setup-step-one.scss";
 
-class TeamQuantity extends Component {
+class TournamentSetupStepOne extends Component {
   render() {
     return (
       <div className="team-quantity">
@@ -35,4 +35,4 @@ class TeamQuantity extends Component {
   }
 }
 
-export default TeamQuantity;
+export default TournamentSetupStepOne;

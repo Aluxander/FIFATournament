@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import TeamQuantity from "../../components/TeamQuantity/TeamQuantity";
+import TournamentSetupStepOne from "../../components/TournamentSetupStepOne/TournamentSetupStepOne";
 import ThreeStepNavigator from "../../components/ThreeStepNavigator/ThreeStepNavigator";
 import TorunamentSetupStepTwo from "../../components/TournamentSetupStepTwo/TournamentSetupStepTwo";
+import TorunamentSetupStepThree from "../../components/TournamentSetupStepThree/TournamentSetupStepThree";
+import TournamentViewPage from "../TournamentViewPage/TournamentViewPage";
 import "./tournament-setup-page.scss";
 
 class TorunamentSetupPage extends Component {
@@ -17,6 +19,9 @@ class TorunamentSetupPage extends Component {
   handleRandomTeams = generatedTeams => {
     console.log(generatedTeams);
     this.setState({ generatedTeams: generatedTeams });
+    this.setState({
+      step: 3
+    });
   };
 
   handleStep = step => {
@@ -93,7 +98,9 @@ class TorunamentSetupPage extends Component {
             switch (this.state.step) {
               case 1:
                 return (
-                  <TeamQuantity onTeamQuantity={this.handleTeamQuantity} />
+                  <TournamentSetupStepOne
+                    onTeamQuantity={this.handleTeamQuantity}
+                  />
                 );
               case 2:
                 return (
@@ -109,10 +116,19 @@ class TorunamentSetupPage extends Component {
                     twoVsTwo={this.state.twoVsTwo}
                   />
                 );
+              case 3:
+                return (
+                  <TorunamentSetupStepThree
+                    teams={this.state.generatedTeams}
+                    isOneVsOne={this.state.oneVsOne}
+                    isTwoVsTwo={this.state.twoVsTwo}
+                  />
+                );
               default:
                 return null;
             }
           })()}
+          <TournamentViewPage />
         </div>
       </div>
     );

@@ -23,7 +23,7 @@ class TournamentSetupStepTwo extends Component {
     }
     if (this.props.twoVsTwo) {
       if (this.isCorrectTwoVsTwo())
-        generatedTeams = this.randomOneVsOne(
+        generatedTeams = this.randomTwoVsTwo(
           shuffledParticipants,
           shuffledTeams
         );
@@ -39,7 +39,8 @@ class TournamentSetupStepTwo extends Component {
       generatedTeams = [
         ...generatedTeams,
         {
-          participants: [participants[i].name],
+          id: i + 1,
+          participants: participants[i].name,
           team: teams[i].name
         }
       ];
@@ -48,12 +49,14 @@ class TournamentSetupStepTwo extends Component {
   };
 
   randomTwoVsTwo = (participants, teams) => {
+    console.log(teams);
     let generatedTeams = [];
     let teamIndex = 0;
     for (let i = 0; i < participants.length; i = i + 2) {
       generatedTeams = [
         ...generatedTeams,
         {
+          id: teamIndex + 1,
           participants: [participants[i].name, participants[i + 1].name],
           team: teams[teamIndex].name
         }
